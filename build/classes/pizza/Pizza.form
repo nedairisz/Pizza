@@ -239,6 +239,9 @@
     </Container>
     <Component class="javax.swing.JLabel" name="lblKep">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/kepek/trpizza.com.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="K&#xe9;p"/>
       </Properties>
     </Component>

@@ -4,6 +4,8 @@
  */
 package pizza;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 
@@ -18,8 +20,50 @@ public class Pizza extends javax.swing.JFrame {
      */
     public Pizza() {
         initComponents();
+        
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/kepek/trpizza.com.png"));
+        int labelWidth = lblKep.getWidth();
+        int labelHeight = lblKep.getHeight();
+        Image originalImage = originalIcon.getImage();
+        Image resizedImage = originalImage.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+        lblKep.setIcon(resizedIcon);
+        
+    }
+    private String getSelectedPizza() {
+        if (rbtPepperoni.isSelected()) {
+            return rbtPepperoni.getText();
+        } else if (rbtHawaii.isSelected()) {
+            return rbtHawaii.getText();
+        } else if (rbtMargharita.isSelected()) {
+            return rbtMargharita.getText();
+        } else if (rbtSonkas.isSelected()) {
+            return rbtSonkas.getText();
+        } else {
+            return "No pizza selected";
+        }
     }
 
+    private String getSelectedExtra() {
+        String selectedExtra = "";
+        if (chbOliva.isSelected()) {
+            selectedExtra += "Oliva, ";
+        }
+        if (chbKukorica.isSelected()) {
+            selectedExtra += "Kukorica, ";
+        }
+        if (chbGomba.isSelected()) {
+            selectedExtra += "Gomba, ";
+        }
+
+        if (!selectedExtra.isEmpty()) {
+            selectedExtra = selectedExtra.substring(0, selectedExtra.length() - 2); // Remove the last ", "
+        } else {
+            selectedExtra = "No extra selected";
+        }
+
+        return selectedExtra;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -124,6 +168,7 @@ public class Pizza extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        lblKep.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kepek/trpizza.com.png"))); // NOI18N
         lblKep.setText("Kép");
 
         lblMeret.setText("Méret:");
@@ -200,8 +245,13 @@ public class Pizza extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMegrendelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMegrendelActionPerformed
-        
-        JOptionPane.showMessageDialog(rootPane, null);
+        String selectedPizza = ""; // Get the selected pizza option
+    String selectedExtra = ""; // Get the selected extra option
+    String selectedSize = cmbMeret.getSelectedItem().toString(); // Get the selected size
+    int selectedQuantity = (int) sprDarab.getValue(); // Get the selected quantity
+
+    OrderSummaryWindow summaryWindow = new OrderSummaryWindow(selectedPizza, selectedExtra, selectedSize, selectedQuantity);
+    summaryWindow.setVisible(true);
     }//GEN-LAST:event_btnMegrendelActionPerformed
 
     /**
@@ -230,7 +280,7 @@ public class Pizza extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Pizza.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
