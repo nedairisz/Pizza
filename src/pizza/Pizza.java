@@ -19,6 +19,7 @@ public class Pizza extends javax.swing.JFrame {
      */
     public Pizza() {
         initComponents();
+        setLocationRelativeTo(null);
         
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("/kepek/trpizza.com.png"));
         int labelWidth = lblKep.getWidth();
@@ -42,10 +43,12 @@ public class Pizza extends javax.swing.JFrame {
         } else if (rbtSonkas.isSelected()) {
             return rbtSonkas.getText();
         } else if (!isPizzaSelected()) {
+            JOptionPane.showMessageDialog(this, "Nincs kiválasztva pizza!", "Hiba", JOptionPane.CANCEL_OPTION);
             return "No pizza selected";
         }
         return null; // Handle other cases if needed
 }
+    
     private boolean isExtraSelected() {
     return chbOliva.isSelected() || chbKukorica.isSelected() || chbGomba.isSelected();
 }
@@ -63,7 +66,8 @@ public class Pizza extends javax.swing.JFrame {
         }
         selectedExtra = selectedExtra.substring(0, selectedExtra.length() - 2); // Remove the last ", "
         return selectedExtra;
-    } else {
+    } 
+    else {
         return "No extra selected";
     }
 }
@@ -99,6 +103,8 @@ public class Pizza extends javax.swing.JFrame {
         jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Pizza rendelés");
+        setMinimumSize(new java.awt.Dimension(376, 340));
 
         pnlPizza.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pizza", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 102, 0))); // NOI18N
 
@@ -216,7 +222,7 @@ public class Pizza extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblKep, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblMeret)
