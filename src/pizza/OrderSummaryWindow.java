@@ -1,5 +1,6 @@
 package pizza;
 
+import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -7,11 +8,11 @@ import javax.swing.JLabel;
 public class OrderSummaryWindow extends JFrame {
     public OrderSummaryWindow(String selectedPizza, String selectedExtra, String selectedSize, int selectedQuantity) {
         setTitle("Rendelés");
-        setSize(300, 50);
+        setSize(300, 200);
         setLocationRelativeTo(null); // Center the window on the screen
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
         add(panel);
 
         JLabel pizzaLabel = new JLabel("Selected Pizza: " + selectedPizza);

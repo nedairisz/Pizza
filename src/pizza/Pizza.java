@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class Pizza extends javax.swing.JFrame {
-
     /**
      * Creates new form Pizza
      */
@@ -30,6 +29,9 @@ public class Pizza extends javax.swing.JFrame {
         lblKep.setIcon(resizedIcon);
         
     }
+    private boolean isPizzaSelected() {
+    return rbtPepperoni.isSelected() || rbtHawaii.isSelected() || rbtMargharita.isSelected() || rbtSonkas.isSelected();
+}
     private String getSelectedPizza() {
         if (rbtPepperoni.isSelected()) {
             return rbtPepperoni.getText();
@@ -39,12 +41,16 @@ public class Pizza extends javax.swing.JFrame {
             return rbtMargharita.getText();
         } else if (rbtSonkas.isSelected()) {
             return rbtSonkas.getText();
-        } else {
+        } else if (!isPizzaSelected()) {
             return "No pizza selected";
         }
-    }
-
+        return null; // Handle other cases if needed
+}
+    private boolean isExtraSelected() {
+    return chbOliva.isSelected() || chbKukorica.isSelected() || chbGomba.isSelected();
+}
     private String getSelectedExtra() {
+    if (isExtraSelected()) {
         String selectedExtra = "";
         if (chbOliva.isSelected()) {
             selectedExtra += "Oliva, ";
@@ -55,15 +61,13 @@ public class Pizza extends javax.swing.JFrame {
         if (chbGomba.isSelected()) {
             selectedExtra += "Gomba, ";
         }
-
-        if (!selectedExtra.isEmpty()) {
-            selectedExtra = selectedExtra.substring(0, selectedExtra.length() - 2); // Remove the last ", "
-        } else {
-            selectedExtra = "No extra selected";
-        }
-
+        selectedExtra = selectedExtra.substring(0, selectedExtra.length() - 2); // Remove the last ", "
         return selectedExtra;
+    } else {
+        return "No extra selected";
     }
+}
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,6 +94,7 @@ public class Pizza extends javax.swing.JFrame {
         lblBarab = new javax.swing.JLabel();
         sprDarab = new javax.swing.JSpinner();
         btnMegrendel = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -187,6 +192,17 @@ public class Pizza extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 67, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -196,31 +212,36 @@ public class Pizza extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlExtra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlPizza, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addComponent(lblKep, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblKep, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblMeret)
-                                    .addComponent(lblBarab))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cmbMeret, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(sprDarab))))
-                        .addContainerGap(47, Short.MAX_VALUE))
+                            .addComponent(lblMeret)
+                            .addComponent(lblBarab))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbMeret, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sprDarab))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnMegrendel)
-                        .addGap(25, 25, 25))))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnMegrendel)))
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnMegrendel)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(143, 143, 143)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnMegrendel))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(pnlPizza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -245,13 +266,14 @@ public class Pizza extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMegrendelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMegrendelActionPerformed
-        String selectedPizza = ""; // Get the selected pizza option
-    String selectedExtra = ""; // Get the selected extra option
-    String selectedSize = cmbMeret.getSelectedItem().toString(); // Get the selected size
-    int selectedQuantity = (int) sprDarab.getValue(); // Get the selected quantity
+        String selectedPizza = getSelectedPizza();
+        String selectedExtra = getSelectedExtra();
+        String selectedSize = (String) cmbMeret.getSelectedItem();
+        int selectedQuantity = (int) sprDarab.getValue();
 
-    OrderSummaryWindow summaryWindow = new OrderSummaryWindow(selectedPizza, selectedExtra, selectedSize, selectedQuantity);
-    summaryWindow.setVisible(true);
+        // Display order summary in a new window
+        OrderSummaryWindow summaryWindow = new OrderSummaryWindow(selectedPizza, selectedExtra, selectedSize, selectedQuantity);
+        summaryWindow.setVisible(true);
     }//GEN-LAST:event_btnMegrendelActionPerformed
 
     /**
@@ -296,6 +318,7 @@ public class Pizza extends javax.swing.JFrame {
     private javax.swing.JCheckBox chbKukorica;
     private javax.swing.JCheckBox chbOliva;
     private javax.swing.JComboBox<String> cmbMeret;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lblBarab;
     private javax.swing.JLabel lblKep;
